@@ -36,3 +36,4 @@ global_average_variable = cube4_region.collapsed(['longitude'],iris.analysis.MEA
 
 qplt.pcolormesh(global_average_variable)
 plt.show()
+print hello
