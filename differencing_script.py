@@ -60,7 +60,7 @@ cube4b_region.coord('longitude').guess_bounds()
 grid_areas = iris.analysis.cartography.area_weights(cube4b_region)
 global_average_variableb = cube4b_region.collapsed(['longitude'],iris.analysis.MEAN,weights=grid_areas
 
-diff_cube = global_average_variablea - globalaveragevariableb
+diff_cube = global_average_variablea - global_average_variableb
                                                    
 qplt.pcolormesh(diff_cube)
-plt.show(
+plt.show()
