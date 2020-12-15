@@ -8,7 +8,7 @@ cubea = iris.load_cube('/disk2/lr452/Downloads/DISSIC_FIX/S_OCEAN/S_Ocean.dissic
 
 
 add_month_number(cubea, 'time', name='month_number')
-cube2a = cubea[np.where((cube.coord('month_number').points == 6) | (cube.coord('month_number') == 7) | (cube.coord('month_number') == 8))]
+cube2a = cubea[np.where((cubea.coord('month_number').points == 6) | (cubea.coord('month_number') == 7) | (cubea.coord('month_number') == 8))]
 
 #then to average this by each year, so that you have the December-Jan for each year add the 'season year', i.e. a number of each 'season'
 add_season_year(cube2a, 'time', name='season_year')
@@ -35,7 +35,7 @@ global_average_variablea = cube4a_region.collapsed(['longitude'],iris.analysis.M
 
 
 
-cube2b = cubea[np.where((cube.coord('month_number').points == 12) | (cube.coord('month_number') == 1) | (cube.coord('month_number') == 2))]
+cube2b = cubea[np.where((cubea.coord('month_number').points == 12) | (cubea.coord('month_number') == 1) | (cubea.coord('month_number') == 2))]
 
 #then to average this by each year, so that you have the December-Jan for each year add the 'season year', i.e. a number of each 'season'
 add_season_year(cube2b, 'time', name='season_year')
@@ -58,7 +58,7 @@ cube4b_region = temporary_cubeb.intersection(latitude = (south,north))
 cube4b_region.coord('latitude').guess_bounds()
 cube4b_region.coord('longitude').guess_bounds()
 grid_areas = iris.analysis.cartography.area_weights(cube4b_region)
-global_average_variableb = cube4b_region.collapsed(['longitude'],iris.analysis.MEAN,weights=grid_areas
+global_average_variableb = cube4b_region.collapsed(['longitude'],iris.analysis.MEAN,weights=grid_areas)
 
 diff_cube = global_average_variablea - global_average_variableb
                                                    
