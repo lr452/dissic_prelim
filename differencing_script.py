@@ -36,6 +36,7 @@ global_average_variablea = cube4a_region.collapsed(['longitude'],iris.analysis.M
 
 cubeb = iris.load_cube('/disk2/lr452/Downloads/DISSIC_FIX/S_OCEAN/S_Ocean.dissic_Omon_GFDL-CM4_historical_r1i1p1f1_gr_199401-201412.nc','dissic')
 
+add_month_number(cubeb, 'time', name='month_number')
 cube2b = cubeb[np.where((cubeb.coord('month_number').points == 6) | (cubeb.coord('month_number') == 7) | (cubeb.coord('month_number') == 8))]
 
 #then to average this by each year, so that you have the December-Jan for each year add the 'season year', i.e. a number of each 'season'
