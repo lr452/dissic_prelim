@@ -4,7 +4,7 @@ import iris.quickplot as qplt
 import matplotlib.pyplot as plt
 from iris.coord_categorisation import *
 
-cubea = iris.load_cube('/disk2/lr452/Downloads/DISSIC_FIX/S_OCEAN/S_Ocean.dissic_Omon_UKESM1-0-LL_historical_r1i1p1f2_gn_199401-201412.nc','dissic')
+cubea = iris.load_cube('/disk2/lr452/Downloads/DISSIC_FIX/S_OCEAN/S_Ocean.dissic_Omon_NorESM2-LM_historical_r1i1p1f1_gr_199401-201412.nc','dissic')
 
 
 add_month_number(cubea, 'time', name='month_number')
@@ -34,8 +34,9 @@ grid_areas = iris.analysis.cartography.area_weights(cube4a_region)
 global_average_variablea = cube4a_region.collapsed(['longitude'],iris.analysis.MEAN,weights=grid_areas)
 
 
+cubeb = iris.load_cube('/disk2/lr452/Downloads/DISSIC_FIX/S_OCEAN/S_Ocean.dissic_Omon_GFDL-CM4_historical_r1i1p1f1_gr_199401-201412.nc','dissic')
 
-cube2b = cubea[np.where((cubea.coord('month_number').points == 12) | (cubea.coord('month_number') == 1) | (cubea.coord('month_number') == 2))]
+cube2b = cubeb[np.where((cubeb.coord('month_number').points == 6) | (cubeb.coord('month_number') == 7) | (cubeb.coord('month_number') == 8))]
 
 #then to average this by each year, so that you have the December-Jan for each year add the 'season year', i.e. a number of each 'season'
 add_season_year(cube2b, 'time', name='season_year')
