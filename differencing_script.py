@@ -4,7 +4,7 @@ import iris.quickplot as qplt
 import matplotlib.pyplot as plt
 from iris.coord_categorisation import *
 
-cubea = iris.load_cube('/disk2/lr452/Downloads/DISSIC_FIX/S_OCEAN/S_Ocean.dissic_Omon_NorESM2-LM_historical_r1i1p1f1_gr_199401-201412.nc','dissic')
+cubea = iris.load_cube('/disk2/lr452/Downloads/DISSIC_FIX/S_OCEAN/S_Ocean.dissic_Omon_NorESM2-LM_historical_r1i1p1f1_gr_199401-201412_depthregrid.nc','dissic')
 
 
 add_month_number(cubea, 'time', name='month_number')
@@ -34,7 +34,7 @@ grid_areas = iris.analysis.cartography.area_weights(cube4a_region)
 global_average_variablea = cube4a_region.collapsed(['longitude'],iris.analysis.MEAN,weights=grid_areas)
 
 
-cubeb = iris.load_cube('/disk2/lr452/Downloads/DISSIC_FIX/S_OCEAN/S_Ocean.dissic_Omon_GFDL-CM4_historical_r1i1p1f1_gr_199401-201412.nc','dissic')
+cubeb = iris.load_cube('/disk2/lr452/Downloads/DISSIC_FIX/S_OCEAN/S_Ocean.dissic_Omon_GFDL-CM4_historical_r1i1p1f1_gr_199401-201412_depthregrid.nc','dissic')
 
 add_month_number(cubeb, 'time', name='month_number')
 cube2b = cubeb[np.where((cubeb.coord('month_number').points == 6) | (cubeb.coord('month_number') == 7) | (cubeb.coord('month_number') == 8))]
@@ -62,7 +62,10 @@ cube4b_region.coord('longitude').guess_bounds()
 grid_areas = iris.analysis.cartography.area_weights(cube4b_region)
 global_average_variableb = cube4b_region.collapsed(['longitude'],iris.analysis.MEAN,weights=grid_areas)
 
-diff_cube = global_average_variablea - global_average_variableb
+global_average_variablea_copy = global_average_variablea.copy()
+global_average_variablea_copy.data = global_average_variableb.data 
+
+diff_cube = global_average_variablea - global_average_variablea_copy
                                                    
 qplt.pcolormesh(diff_cube)
 plt.show()
