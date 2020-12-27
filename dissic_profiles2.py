@@ -4,8 +4,7 @@ import iris.quickplot as qplt
 import matplotlib.pyplot as plt
 from iris.coord_categorisation import *
 
-#cube = iris.load_cube('/disk2/lr452/Downloads/dissic_Omon_MIROC-ES2L_historical_r1i1p1f2_gn_185001-201412_regridded_soregion.nc','mole_concentration_of_dissolved_inorganic_carbon_in_sea_water')
-cube = iris.load_cube('/disk2/lr452/Downloads/DISSIC_FIX/S_OCEAN/S_Ocean.dissic_Omon_UKESM1-0-LL_historical_r1i1p1f2_gn_199401-201412.nc','dissic')
+cube = iris.load_cube('/disk2/lr452/Downloads/DISSIC_FIX/S_OCEAN/S_Ocean.dissic_Omon_GFDL-CM4_historical_r1i1p1f1_gr_199401-201412_depthregrid_landmask.nc','dissic')
 
 
 add_month_number(cube, 'time', name='month_number')
