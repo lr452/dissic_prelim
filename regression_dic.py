@@ -1,4 +1,4 @@
-import iris 
+import iris
 import numpy as np
 import iris.quickplot as qplt
 import matplotlib.pyplot as plt
@@ -9,12 +9,15 @@ cube = iris.load_cube('/disk2/lr452/Downloads/dissic_data/S_Ocean.dissic_Omon_MI
 
 
 print(cube.shape)
- 
+
 
 #Taking the mean value across the 20 years
 average_across_time = cube.collapsed(['time'],iris.analysis.MEAN)
 
-#Averaging across depth, here I want to change this to the average over the 0-1000m rather than the average across all depth levels
+#Averaging across depth
+max_depth = 100.0
+indexes = np.where(average_across_time.coord('ocean sigma over z coordinate').points <= max_depth)[0]
+average_across_time = average_across_time[indexes]
 average_across_depth = average_across_time.collapsed(['ocean sigma over z coordinate'],iris.analysis.MEAN)
 
 #Extracting a region (Indian, Atlantic, or Pacific)
@@ -31,11 +34,18 @@ cube_region.coord('longitude').guess_bounds()
 grid_areas = iris.analysis.cartography.area_weights(cube_region)
 global_average_variable = cube_region.collapsed(['longitude'],iris.analysis.MEAN,weights=grid_areas)
 
-variable1 = #the latitude data 
-variable2 = global_average_variable 
+variable1 = global_average_variable.coord('latitude').points
+variable2 = global_average_variable.data
 
-#print(variable1.shape)
+print(variable1.shape)
 print(variable2.shape)
 
 slope,intercept,r_value,p_value,std_err = linregress(variable1, variable2)
-show()
+
+print(slope)
+
+plt.scatter(variable1,variable2)
+plt.plot(variable1,(slope*variable1)+intercept)
+plt.xlabel('latitude')
+plt.ylabel('DIC concentration')
+plt.show()
