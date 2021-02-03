@@ -5,9 +5,9 @@ import matplotlib.pyplot as plt
 from iris.coord_categorisation import *
 from scipy.stats.mstats import *
 
-cube = iris.load_cube('/disk2/lr452/Downloads/dissic_data/S_Ocean.dissic_Omon_MIROC-ES2L_historical_r1i1p1f2_gn_199401-201412_landmask.nc','dissic')
+cube = iris.load_cube('/disk2/lr452/Downloads/dissic_data/dissic_Omon_CESM2-FV2_historical_r1i1p1f1_gn_199401-201412.rg.yr.so.fix.mask.nc','dissic')
 
-
+print(cube) 
 print(cube.shape)
 
 
@@ -16,9 +16,9 @@ average_across_time = cube.collapsed(['time'],iris.analysis.MEAN)
 
 #Averaging across depth
 max_depth = 100.0
-indexes = np.where(average_across_time.coord('ocean sigma over z coordinate').points <= max_depth)[0]
+indexes = np.where(average_across_time.coord('lev').points <= max_depth)[0]
 average_across_time = average_across_time[indexes]
-average_across_depth = average_across_time.collapsed(['ocean sigma over z coordinate'],iris.analysis.MEAN)
+average_across_depth = average_across_time.collapsed(['lev'],iris.analysis.MEAN)
 
 #Extracting a region (Indian, Atlantic, or Pacific)
 west = 40
